@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="gradient">
+  <div class="card">
+    <h1>VIT Data Retriever</h1>
+    <p>Select options to retrieve customer details</p>
+
+    <select id="typeSelect"><option>Select Type</option></select>
+    <select id="offerSelect"><option>Select Offer</option></select>
+    <select id="cycleSelect"><option>Select Bill Cycle</option></select>
+
+    <button onclick="retrieveDetails()">Retrieve Customer Details</button>
+    <pre id="details" class="details"></pre>
+
+    <button onclick="copyDetails()">Copy Details</button>
+    <button id="resetBtn" onclick="resetAll()">Reset All</button>
+    <p id="status" class="status"></p>
+  </div>
+
+  <script>
+    async function loadDropdowns() {
+      const result = await window.pywebview.api.get_dropdowns();
+      populate("typeSelect", result.types);
+      populate("offerSelect", result.offers);
+      populate("cycleSelect", result.cycles);
+      if (localStorage.getItem("canReset") !== "true") {
+        document.getElementById("resetBtn").style.display = "none";
+      }
+    }
+
+    function populate(id, items) {
+      const select = document.getElementById(id);
+      select.innerHTML = "";
+      items.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item;
+        opt.textContent = item;
+        select.appendChild(opt);
+      });
+    }
+
+    async function retrieveDetails() {
+      const user = localStorage.getItem("verifiedUser");
+      const type = document.getElementById("typeSelect").value;
+      const offer = document.getElementById("offerSelect").value;
+      const cycle = document.getElementById("cycleSelect").value;
+      const result = await window.pywebview.api.retrieve_customer(user, type, offer, cycle);
+      if (result.status === "success") {
+        const text = Object.entries(result.details).map(([k, v]) => `${k}: ${v}`).join("\n");
+        document.getElementById("details").textContent = text;
+        document.getElementById("status").textContent = "Customer details retrieved successfully";
+      } else {
+        document.getElementById("details").textContent = "";
+        document.getElementById("status").textContent = "No matching entries found";
+      }
+    }
+
+    function copyDetails() {
+      const text = document.getElementById("details").textContent;
+      navigator.clipboard.writeText(text);
+      document.getElementById("status").textContent = "Details copied to clipboard";
+    }
+
+    async function resetAll() {
+      await window.pywebview.api.reset_all();
+      document.getElementById("status").textContent = "Data and log reset successfully";
+      loadDropdowns();
+      document.getElementById("details").textContent = "";
+    }
+
+    window.onload = loadDropdowns;
+  </script>
+</body>
+</html>

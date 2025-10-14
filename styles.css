@@ -1,0 +1,76 @@
+body.gradient {
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background: linear-gradient(to right, #E60000, #FF8000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.card {
+  background-color: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  max-width: 700px;
+  width: 100%;
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #E60000;
+  margin-bottom: 0.5rem;
+}
+
+p {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+input, select, button {
+  font-size: 1rem;
+  padding: 0.6rem 1rem;
+  margin: 0.5rem 0;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  background-color: #FF8000;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+button:hover {
+  background-color: #E67300;
+  transform: scale(1.03);
+}
+
+.details {
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: left;
+  white-space: pre-wrap;
+  font-family: monospace;
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+.status {
+  font-size: 0.9rem;
+  color: #E60000;
+  margin-top: 0.5rem;
+}
+
+.support {
+  font-size: 0.8rem;
+  color: #666;
+  margin-top: 1rem;
+}

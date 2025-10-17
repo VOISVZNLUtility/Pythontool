@@ -3,14 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <title>VIT Data Retriever</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body class="gradient">
   <div class="card">
     <h1>VIT Data Retriever</h1>
     <p>Enter your Username below</p>
-    <input id="username" type="text" placeholder="Enter your Username">
-    <button onclick="verify()">Verify</button>
+
+    <div class="input-group">
+      <input id="username" type="text" placeholder="Enter your Username">
+      <button onclick="verify()">Verify</button>
+    </div>
+
     <p id="status" class="status"></p>
     <p class="support">Need help? Contact support</p>
   </div>

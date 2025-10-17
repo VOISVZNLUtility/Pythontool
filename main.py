@@ -17,7 +17,11 @@ def load_data():
     else:
         with open(DATA_FILE, newline="", encoding="utf-8") as f:
             reader = csv.DictReader(f)
-            data = [{k.strip(): v.strip() for k, v in row.items()} for row in reader]
+            data = []
+            for row in reader:
+                cleaned = {k.strip(): v.strip() for k, v in row.items()}
+                data.append(cleaned)
+    print("Loaded rows:", len(data))
 
 def save_data():
     with open(DATA_FILE, "w", newline="", encoding="utf-8") as f:
@@ -25,6 +29,7 @@ def save_data():
         writer = csv.DictWriter(f, fieldnames=fieldnames)
         writer.writeheader()
         writer.writerows(data)
+    print("Saved rows:", len(data))
 
 def log_retrieval(user, cid, type_val, offer_val):
     with open(LOG_FILE, "a", newline="", encoding="utf-8") as f:
@@ -41,17 +46,19 @@ class Api:
 
     def get_dropdowns(self):
         load_data()
-        types = sorted(set(row["Type"] for row in data if not row["Used"]))
-        offers = sorted(set(row["Offer"] for row in data if not row["Used"]))
-        cycles = sorted(set(row["BILL CYCLE"] for row in data if not row["Used"]))
+        types = sorted(set(row.get("Type", "").strip() for row in data if row.get("Used", "").strip() == ""))
+        offers = sorted(set(row.get("Offer", "").strip() for row in data if row.get("Used", "").strip() == ""))
+        cycles = sorted(set(row.get("BILL CYCLE", "").strip() for row in data if row.get("Used", "").strip() == ""))
+        print("Dropdowns:", types, offers, cycles)
         return {"types": types, "offers": offers, "cycles": cycles}
 
     def retrieve_customer(self, user, selected_type, selected_offer, selected_cycle):
+        load_data()
         for row in data:
-            if (row["Type"] == selected_type and
-                row["Offer"] == selected_offer and
-                row["BILL CYCLE"] == selected_cycle and
-                not row["Used"]):
+            if (row.get("Type") == selected_type and
+                row.get("Offer") == selected_offer and
+                row.get("BILL CYCLE") == selected_cycle and
+                row.get("Used", "").strip() == ""):
                 row["Used"] = "Yes"
                 row["User_ID"] = user
                 save_data()
@@ -71,6 +78,7 @@ class Api:
         return {"status": "fail"}
 
     def reset_all(self):
+        load_data()
         for row in data:
             row["Used"] = ""
             row["User_ID"] = ""

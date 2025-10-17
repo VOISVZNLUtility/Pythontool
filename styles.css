@@ -7,6 +7,7 @@ body.gradient {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  position: relative;
 }
 
 .card {
@@ -30,26 +31,76 @@ p {
   margin-bottom: 1rem;
 }
 
-input, select, button {
+.input-group {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.input-group input {
+  width: 60%;
+  padding: 10px;
   font-size: 1rem;
-  padding: 0.6rem 1rem;
-  margin: 0.5rem 0;
-  width: 100%;
-  border: 1px solid #ccc;
+}
+
+.input-group button {
+  width: 120px;
+  background-color: #E60000;
+  color: white;
+  border: none;
+  padding: 10px;
   border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.input-group button:hover {
+  background-color: #CC0000;
+}
+
+.dropdown-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1rem;
+}
+
+.dropdown-row select {
+  width: 150px;
+  padding: 8px;
+}
+
+.button-row {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 1rem;
 }
 
 button {
-  background-color: #FF8000;
+  width: 140px;
+  background-color: #E60000;
   color: white;
   border: none;
+  padding: 10px;
+  border-radius: 6px;
+  font-weight: bold;
   cursor: pointer;
-  transition: all 0.2s ease;
 }
 
 button:hover {
+  background-color: #CC0000;
+}
+
+.copy-button {
+  background-color: #FF8000;
+  border: 2px solid #FF8000;
+}
+
+.copy-button:hover {
   background-color: #E67300;
-  transform: scale(1.03);
+  border-color: #E67300;
 }
 
 .details {
@@ -73,4 +124,24 @@ button:hover {
   font-size: 0.8rem;
   color: #666;
   margin-top: 1rem;
+}
+
+.top-bar {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+
+.logout-button {
+  background-color: #E60000;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  background-color: #CC0000;
 }
